@@ -222,6 +222,35 @@ const RegistrationForm = ()=>{
         const{ch,msg} = checkValid(f,v);
         dispatch({type:"update",fld:f,val:{value:v,valid:ch,touch:true,error:msg}});
     }
+
+    const[msg,setMsg] = useState("");
+
+    const submitData = (e)=>{
+        e.preventDefault();
+
+        console.log(cust);
+        const reqOption = {
+            method:"POST",
+            headers:{'content-type':'application/json'},
+            body : JSON.stringify({
+                username:cust.username.value,
+                mobileno:cust.mobileno.value,
+                password:cust.password.value,
+                firstname:cust.firstname.value,
+                lastname:cust.lastname.value,
+                email:cust.email.value
+            })
+        }
+
+
+        fetch('http://localhost:9000/insertdata',reqOption)
+        .then(resp=>resp.text())
+        .then(str =>setMsg(str));
+
+        dispatch(init);
+        setCapVal(null);
+        console.log("Meassge"+msg);
+    } 
     
     return(
         <div>
@@ -328,9 +357,15 @@ const RegistrationForm = ()=>{
 
                 <div class="mt-3 d-grid gap-2 ms-5 me-5">
                     <button className={cust.firstname.value && cust.lastname.valid && cust.email.valid && cust.mobileno.valid 
-                        && cust.username.valid && cust.password.valid && cust.confirmpassword.valid && capVal != null? "btn btn-primary":"btn btn-primary disabled"}>Register</button>
+                        && cust.username.valid && cust.password.valid && cust.confirmpassword.valid && capVal != null? "btn btn-primary":"btn btn-primary disabled"} 
+                        onClick={(e)=>{
+                            submitData(e);
+                        }}>Register</button>
                 </div>
 
+                <div className={msg=='Success'? "alert alert-primary mt-5":"alert alert-danger mt-5"} role="alert" style={{display:msg!=""? 'block':'none'}}>
+                        {msg}
+                </div>
             </div>
         </div>
     )
