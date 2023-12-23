@@ -2,6 +2,8 @@
 import './App.css';
 import { LoginForm, RegistrationForm } from './componants/from';
 import { Route, Routes } from 'react-router-dom';
+import ProtectedRoutes from './componants/protectedroutes';
+import UserHome from './componants/home';
 
 function App() {
   return (
@@ -26,6 +28,9 @@ function App() {
             <Route path='/' element={<LoginForm/>}/>
             <Route path='/login' element={<LoginForm/>}/>
             <Route path='/register' element={<RegistrationForm/>}/>
+            <Route element={<ProtectedRoutes/>}/>
+              <Route path='/userhome' element={<UserHome/>}/>
+            <Route/>
         </Routes>
     </div>
   );

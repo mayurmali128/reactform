@@ -1,6 +1,9 @@
 import { useReducer, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import {Link } from "react-router-dom";
+import { login, logout } from "../loggedslice";
+import { useNavigate } from "react-router-dom"
+import ProtectedRoutes from "./protectedroutes";
 
 //site key : 6Ld2vjgpAAAAAB-cpCkxehmhmZpd-TCmevbbg4De
 //secret key: 6Ld2vjgpAAAAAOrqK3oEHtpokELb00UHjmte2YXM
@@ -50,6 +53,36 @@ const LoginForm = ()=>{
 
     //for capcha
     const[capVal,setCapVal] = useState(null);
+    const[str,setStr] = useState('false');
+
+    const checkLogin = (e)=>{
+        e.preventDefault();
+
+        console.log(cust);
+        const reqOption = {
+            method:"POST",
+            headers:{'content-type':'application/json'},
+            body : JSON.stringify({
+                username:cust.username.value,
+                password:cust.password.value
+            })
+        }
+        fetch('http://localhost:9000/checkLogin',reqOption)
+        .then(resp=>resp.text())
+        .then(str =>{
+            console.log(str);
+            if(str=='true'){
+                login();
+                navigate('/userhome');
+            }
+            else{
+                alert("Wronge username or password.");
+                navigate('/login');
+            }
+        });
+    }
+
+    let navigate = useNavigate();
 
     return(
         <div>
@@ -96,7 +129,18 @@ const LoginForm = ()=>{
                 </div>
 
                 <div class="mt-3 d-grid gap-2 ms-5 me-5 pt-4">
-                    <button className={cust.username.valid&&cust.password.valid&&capVal!=null ? "btn btn-primary":"btn btn-primary disabled"}>Login</button>
+                    <button className={cust.username.valid&&cust.password.valid&&capVal!=null ? "btn btn-primary":"btn btn-primary disabled"}
+                    onClick={(e)=>{
+                        checkLogin(e);
+                        // if(str=='true'){
+                        //     login();
+                        //     navigate('/userhome');
+                        // }
+                        // else{
+                        //     alert("Wronge username or password.");
+                        //     navigate('/login');
+                        // }
+                    }}>Login</button>
                 </div>
 
             </div>
