@@ -1,8 +1,10 @@
 import React from "react";
 import { logout } from "../loggedslice";
 import { useNavigate } from "react-router-dom";
+import { useDispatch} from "react-redux";
 
 const UserHome = ()=>{
+    const dispatchRedux = useDispatch();
     let navigate = useNavigate();
     return(
         <div>
@@ -10,7 +12,7 @@ const UserHome = ()=>{
             <button className="btn btn-primary"
             onClick={(e)=>{
                 e.preventDefault();
-                logout();
+                dispatchRedux(logout());
                 navigate('/login');
             }}>Logout</button>
         </div>

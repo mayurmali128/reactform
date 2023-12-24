@@ -2,13 +2,16 @@ import { useReducer, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import {Link } from "react-router-dom";
 import { login, logout } from "../loggedslice";
-import { useNavigate } from "react-router-dom"
-import ProtectedRoutes from "./protectedroutes";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+// import ProtectedRoutes from "./protectedroutes";
 
 //site key : 6Ld2vjgpAAAAAB-cpCkxehmhmZpd-TCmevbbg4De
 //secret key: 6Ld2vjgpAAAAAOrqK3oEHtpokELb00UHjmte2YXM
 
 const LoginForm = ()=>{
+
+    
     const init ={
         username :{value:"",valid:false, touch:false, error:""},
         password :{value:"",valid:false, touch:false, error:""},
@@ -54,10 +57,9 @@ const LoginForm = ()=>{
     //for capcha
     const[capVal,setCapVal] = useState(null);
     const[str,setStr] = useState('false');
-
+    const dispatchRedux = useDispatch()
     const checkLogin = (e)=>{
         e.preventDefault();
-
         console.log(cust);
         const reqOption = {
             method:"POST",
@@ -72,8 +74,8 @@ const LoginForm = ()=>{
         .then(str =>{
             console.log(str);
             if(str=='true'){
-                login();
-                navigate('/userhome');
+                dispatchRedux(login());
+                navigate('/dashboard');
             }
             else{
                 alert("Wronge username or password.");

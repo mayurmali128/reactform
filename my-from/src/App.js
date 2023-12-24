@@ -29,11 +29,13 @@ function App() {
             <Route path='/' element={<LoginForm/>}/>
             <Route path='/login' element={<LoginForm/>}/>
             <Route path='/register' element={<RegistrationForm/>}/>
-            <Route element={<ProtectedRoutes/>}/>
-              <Route path='/userhome' element={<UserHome/>}/>
-            <Route/>
+            {/* <Route element={<ProtectedRoutes/>}/>
+              <Route path='/' element={<UserHome/>}/>
+              <Route path='/changepass' element={<UpdatePassword/>}/>
+            <Route/> */}
 
-            <Route path='/changepass' element={<UpdatePassword/>}/>
+              <Route path='/dashboard' element={<ProtectedRoutes Component = {UserHome}/>}/>
+            {/* <Route path='/changepass' element={<UpdatePassword/>}/> */}
         </Routes>
     </div>
   );

@@ -4,12 +4,12 @@ import { createSlice } from "@reduxjs/toolkit";
 export const loggedSlice = createSlice({
     name: "logged",
     initialState: {
-        loggedIn: false
+        value: false
     },
     reducers : {
-        login: (state)=> { return {loggedIn: true}},
+        login: (state)=> {state.value=true},
 
-        logout: (state) => { return {loggedIn: false}}
+        logout: (state) => { state.value=false}
     }
 })
 //component actions - useDispatch
