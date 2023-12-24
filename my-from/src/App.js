@@ -4,6 +4,7 @@ import { LoginForm, RegistrationForm } from './componants/from';
 import { Route, Routes } from 'react-router-dom';
 import ProtectedRoutes from './componants/protectedroutes';
 import UserHome from './componants/home';
+import UpdatePassword from './componants/updatepassword';
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
             <Route element={<ProtectedRoutes/>}/>
               <Route path='/userhome' element={<UserHome/>}/>
             <Route/>
+
+            <Route path='/changepass' element={<UpdatePassword/>}/>
         </Routes>
     </div>
   );
